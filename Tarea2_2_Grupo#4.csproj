@@ -61,6 +61,19 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="NewFolder1\" />
+	  <Folder Include="NewFolder2\" />
+	  <Folder Include="NewFolder\NewFolder\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="ListView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

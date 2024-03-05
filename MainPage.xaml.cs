@@ -1,13 +1,24 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using Microsoft.Maui.Controls;
 
 namespace Tarea2_2_Grupo_4
 {
     public partial class MainPage : ContentPage
     {
+        FirmaController firmaController;
+
         public MainPage()
         {
             InitializeComponent();
+
+            // Ruta a la base de datos SQLite
+            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Firmas.db3");
+
+            // Crear una instancia del controlador
+            firmaController = new FirmaController(dbPath);
         }
+
         private async void OnCounterClicked(object sender, EventArgs e)
         {
             var image = await drawingView.GetImageStream(200, 200);
@@ -22,25 +33,26 @@ namespace Tarea2_2_Grupo_4
                     bytes = ms.ToArray();
                 }
 
-                string folderPath = "/storage/emulated/0";
+                // Obtener el nombre y la descripción de los Entry
+                string nombre = nombreEntry.Text;
+                string descripcion = descripcionEntry.Text;
 
-                // Asegúrate de que la carpeta exista, si no existe, créala
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
+                // Guardar la firma en la base de datos
+                firmaController.InsertarFirma(nombre, descripcion, bytes);
 
-                // Construir la ruta completa del archivo
-                var filename = Path.Combine(folderPath, "drawing.png");
-                File.WriteAllBytes(filename, bytes);
-
-                await DisplayAlert("Guardado", "El dibujo ha sido guardado en el dispositivo.", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Error", "No se pudo guardar el dibujo.", "OK");
+                // Mostrar alerta de éxito
+                await DisplayAlert("Éxito", "Firma guardada con éxito", "Aceptar");
             }
         }
-        
+
+        private void ListaBtn_Clicked(object sender, EventArgs e)
+        {
+            // Crear una instancia de la página FirmaListPage
+            var firmaListPage = new FirmaListPage();
+
+            // Navegar a la página FirmaListPage
+            Navigation.PushAsync(firmaListPage);
+        }
+
     }
 }

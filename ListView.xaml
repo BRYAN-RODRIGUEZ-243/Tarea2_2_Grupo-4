@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Tarea2_2_Grupo_4.FirmaListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Tarea2_2_Grupo_4"
+    Background="LightGray">
+
+    <ListView x:Name="firmasListView" ItemsSource="{Binding Firmas}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal">
+                        <Image Source="{Binding Imagen}" WidthRequest="50" HeightRequest="50" />
+                        <Label Text="{Binding Nombre}" />
+                        <Label Text="{Binding Descripcion}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+</ContentPage>
