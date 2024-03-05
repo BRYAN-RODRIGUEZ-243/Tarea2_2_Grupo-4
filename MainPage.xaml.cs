@@ -25,25 +25,19 @@ namespace Tarea2_2_Grupo_4
 
             if (image != null)
             {
-                // Convertir la imagen en un arreglo de bytes en formato PNG
-                byte[] bytes;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    ((Stream)image).CopyTo(ms);
-                    bytes = ms.ToArray();
-                }
-
                 // Obtener el nombre y la descripción de los Entry
                 string nombre = nombreEntry.Text;
                 string descripcion = descripcionEntry.Text;
 
                 // Guardar la firma en la base de datos
-                firmaController.InsertarFirma(nombre, descripcion, bytes);
+                firmaController.InsertarFirma(nombre, descripcion, image);
 
                 // Mostrar alerta de éxito
                 await DisplayAlert("Éxito", "Firma guardada con éxito", "Aceptar");
             }
         }
+
+
 
         private void ListaBtn_Clicked(object sender, EventArgs e)
         {
