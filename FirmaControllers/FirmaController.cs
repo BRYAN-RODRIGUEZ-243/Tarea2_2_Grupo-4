@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System.IO;
 
 public class FirmaController
 {
@@ -10,13 +11,20 @@ public class FirmaController
         database.CreateTable<FirmaModel>();
     }
 
-    public void InsertarFirma(string nombre, string descripcion, byte[] imagen)
+    public void InsertarFirma(string nombre, string descripcion, Stream imagenStream)
     {
+        byte[] imagenBytes;
+        using (MemoryStream ms = new MemoryStream())
+        {
+            imagenStream.CopyTo(ms);
+            imagenBytes = ms.ToArray();
+        }
+
         var firma = new FirmaModel
         {
             Nombre = nombre,
             Descripcion = descripcion,
-            Imagen = imagen
+            Imagen = imagenBytes
         };
         database.Insert(firma);
     }
